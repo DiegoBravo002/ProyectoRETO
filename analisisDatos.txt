@@ -1,0 +1,119 @@
+# Instalar y cargar paquetes necesarios
+install.packages("readxl")
+install.packages("ggplot2")
+install.packages("tidyr")  
+library(readxl)
+library(ggplot2)
+library(tidyr)  
+
+# Leer el archivo Excel
+ruta_archivo <- "C:/Users/josee/OneDrive/Desktop/DataSetLP GRUPAL.xlsx"
+datos <- read_excel(ruta_archivo)
+
+# Mostrar las primeras filas del conjunto de datos
+head(datos)
+
+# Calcular estadísticas descriptivas
+media <- mean(datos$Xmax (Alcance), na.rm = TRUE)
+mediana <- median(datos$Xmax (Alcance), na.rm = TRUE)
+desviacion_estandar <- sd(datos$Xmax (Alcance), na.rm = TRUE)
+rango_intercuartilico <- IQR(datos$Xmax (Alcance), na.rm = TRUE)
+
+# Histograma con densidad suavizada para la distancia en X
+ggplot(datos, aes(x = Xmax (Alcance))) +
+  geom_histogram(fill = "lightblue", color = "black", bins = 20) +
+  geom_density(fill = "red", alpha = 0.3, adjust = 1) +  # Línea de densidad suavizada
+  labs(title = "Histograma de la Distancia en X",
+       x = "Distancia en X", y = "Frecuencia") +
+  theme_minimal()
+
+# Histograma para la distancia en Y
+ggplot(datos, aes(x = Ymax (Altura Max))) +
+  geom_histogram(fill = "lightgreen", color = "black", bins = 20) +
+  labs(title = "Histograma de la Distancia en Y",
+       x = "Distancia en Y", y = "Frecuencia") +
+  theme_minimal()
+
+# Crear datos_long usando gather
+datos_long <- gather(datos, key = "Distancia", value = "Valor", Xmax (Alcance), Ymax (Altura Max))
+
+# Verificar los primeros registros de datos_long para asegurarnos de que los datos se transformaron correctamente
+head(datos_long)
+
+# Diagrama de caja para la distancia en X
+ggplot(datos, aes(x = factor(V0), y = Xmax (Alcance), fill = factor(V0))) +
+  geom_boxplot() +
+  labs(title = "Diagrama de Caja de Distancia en X por Velocidad",
+       x = "Velocidad", y = "Distancia en X") +
+  theme_minimal()
+
+# Diagrama de caja para la distancia en Y
+ggplot(datos, aes(x = factor(V0), y = Ymax (Altura Max), fill = factor(V0))) +
+  geom_boxplot() +
+  labs(title = "Diagrama de Caja de Distancia en Y por Velocidad",
+       x = "Velocidad", y = "Distancia en Y") +
+  theme_minimal()
+
+# Diagrama de caja para ambas distancias
+ggplot(datos_long, aes(x = factor(V0), y = Valor, fill = factor(V0))) +
+  geom_boxplot() +
+  labs(title = "Diagrama de Caja de Distancia en X e Y por Velocidad",
+       x = "Velocidad", y = "Distancia", fill = "Velocidad") +
+  facet_wrap(~Distancia, scales = "free_y") +
+  teme_minimal()
+
+# Gráfico de dispersión
+ggplot(datos, aes(x = Angulo, y = Xmax (Alcance))) +
+  geom_point(color = "skyblue") +
+  labs(title = "Gráfico de Dispersión de Distancias Alcanzadas por Ángulo de Disparo",
+       x = "Ángulo de Disparo", y = "Distancia Alcanzada") +
+  theme_minimal()
+
+# Instalar y cargar paquetes necesarios
+install.packages("readxl")
+install.packages("ggplot2")
+install.packages("tidyr")  
+library(readxl)
+library(ggplot2)
+library(tidyr)  
+
+# Leer el archivo Excel
+ruta_archivo <- "C:/Users/josee/OneDrive/Desktop/DATASET GRUPAL2.xlsx"
+datos <- read_excel(ruta_archivo)
+
+# Mostrar las primeras filas del conjunto de datos
+head(datos)
+
+# Crear datos_long usando gather y calcular velocidad
+datos_long <- gather(datos, key = "Distancia", value = "Valor", Alcance (Xmax), Altura (Ymax))
+datos_long$v0 <- rep(c(10, 20, 30, 40), each = nrow(datos) / 4)
+
+# Histograma con densidad suavizada para la distancia en X
+ggplot(datos_long, aes(x = Valor)) +
+  geom_histogram(fill = "lightblue", color = "black", bins = 20) +
+  geom_density(fill = "red", alpha = 0.3, adjust = 1) +  # Línea de densidad suavizada
+  labs(title = "Histograma de la Distancia en X",
+       x = "Distancia en X", y = "Frecuencia") +
+  theme_minimal()
+
+# Histograma para la distancia en Y
+ggplot(datos_long, aes(x = Valor)) +
+  geom_histogram(fill = "lightgreen", color = "black", bins = 20) +
+  labs(title = "Histograma de la Distancia en Y",
+       x = "Distancia en Y", y = "Frecuencia") +
+  theme_minimal()
+
+# Diagrama de caja para ambas distancias
+ggplot(datos_long, aes(x = factor(v0), y = Valor, fill = factor(v0))) +
+  geom_boxplot() +
+  labs(title = "Diagrama de Caja de Distancia en X e Y por Velocidad",
+       x = "Velocidad", y = "Distancia", fill = "Velocidad") +
+  facet_wrap(~Distancia, scales = "free_y") +
+  theme_minimal()
+
+# Gráfico de dispersión
+ggplot(datos, aes(x = Angulo, y = Alcance (Xmax))) +
+  geom_point(color = "skyblue") +
+  labs(title = "Gráfico de Dispersión de Distancias Alcanzadas por Ángulo de Disparo",
+       x = "Ángulo de Disparo", y = "Distancia Alcanzada") +
+  theme_minimal()
